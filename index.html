@@ -942,6 +942,22 @@
   }
 
   @media (max-width: 768px) {
+    .cli-copy-btn {
+      width: 34px !important;
+      height: 34px !important;
+      min-width: 34px !important;
+      padding: 0 !important;
+      border-radius: 6px !important;
+      flex-shrink: 0 !important;
+    }
+    .btn-copy-cli-text {
+      display: none !important;
+    }
+    .btn-copy-cli-icon {
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+    }
     .tavardt-main {
       padding: 24px 16px 40px;
     }
@@ -1069,13 +1085,11 @@
 
     <section class="cli-hero-box">
       <div class="cli-header">
-        <div class="cli-dots">
-          <span class="cli-dot red"></span>
-          <span class="cli-dot yellow"></span>
-          <span class="cli-dot green"></span>
-          <span class="cli-title">Local CLI Terminal Testing</span>
-        </div>
-        <button type="button" class="cli-copy-btn" id="btn-copy-cli" onclick="copyCliCommand()">Copy</button>
+        <span class="cli-title">Local CLI Terminal Testing</span>
+        <button type="button" class="cli-copy-btn" id="btn-copy-cli" onclick="copyCliCommand()" aria-label="Copy Command">
+          <span class="btn-copy-cli-text">Copy</span>
+          <span class="btn-copy-cli-icon" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg></span>
+        </button>
       </div>
       <div class="cli-body">
         <p class="cli-desc">To inspect real production servers deterministically without browser CORS restrictions or sandbox interference, run the official Python utility directly in your terminal or CI/CD pipeline:</p>
@@ -1520,9 +1534,15 @@ if __name__ == "__main__":
       const code = document.getElementById('cli-terminal-code').innerText;
       navigator.clipboard.writeText(code).then(() => {
         const btn = document.getElementById('btn-copy-cli');
-        const orig = btn.innerText;
-        btn.innerText = 'Copied!';
-        setTimeout(() => { btn.innerText = orig; }, 2000);
+        const textSpan = btn.querySelector('.btn-copy-cli-text');
+        if (textSpan) {
+          textSpan.innerText = 'Copied!';
+          setTimeout(() => { textSpan.innerText = 'Copy'; }, 2000);
+        } else {
+          const orig = btn.innerText;
+          btn.innerText = 'Copied!';
+          setTimeout(() => { btn.innerText = orig; }, 2000);
+        }
       });
     }
 
