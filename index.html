@@ -1037,7 +1037,43 @@
       padding: 32px 16px 24px !important;
     }
   }
-  </style>
+  
+    .faq-btn {
+      width: 100%;
+      background: transparent;
+      border: none;
+      padding: 16px 20px;
+      text-align: left;
+      font-size: 0.96rem;
+      font-weight: 600;
+      color: #f1f5f9;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+    }
+    .faq-btn:hover {
+      background: #0f172a;
+    }
+    .faq-icon {
+      font-size: 1.25rem;
+      color: #839bc8;
+      transition: transform 0.2s ease;
+    }
+    .faq-item.active .faq-icon {
+      transform: rotate(45deg);
+    }
+    .faq-body {
+      display: none;
+      padding: 0 20px 18px;
+      color: #94a3b8;
+      font-size: 0.92rem;
+      line-height: 1.6;
+    }
+    .faq-item.active .faq-body {
+      display: block;
+    }
+</style>
 </head>
 <body>
 <noscript><iframe height="0" src="https://www.googletagmanager.com/ns.html?id=GTM-5KNBXRZP" style="display:none;visibility:hidden" width="0"></iframe></noscript>
@@ -1187,49 +1223,49 @@ python audit_wp_race.py https://your-domain.com</div>
 <h2 class="faq-title">Frequently Asked Questions About WordPress Upgrade Security</h2>
 <div class="faq-list">
 <div class="faq-item">
-<button class="faq-question" onclick="toggleFaq(this)" type="button">
+<button class="faq-btn" onclick="toggleFaq(this)" type="button">
 <span>How does the WordPress upgrade Race Condition vulnerability work?</span>
 <span class="faq-icon">+</span>
 </button>
-<div class="faq-answer">
-            During core, theme, or plugin updates, WordPress downloads a ZIP archive and extracts it temporarily into wp-content/upgrade/. If the server allows direct PHP execution in that directory, a concurrency window opens where an attacker can request newly unpacked files before WordPress finishes validation and removes them, achieving remote code execution.
-          </div>
+<div class="faq-body">
+During core, theme, or plugin updates, WordPress downloads a ZIP archive and extracts it temporarily into wp-content/upgrade/. If the server allows direct PHP execution in that directory, a concurrency window opens where an attacker can request newly unpacked files before WordPress finishes validation and removes them, achieving remote code execution.
+</div>
 </div>
 <div class="faq-item">
-<button class="faq-question" onclick="toggleFaq(this)" type="button">
+<button class="faq-btn" onclick="toggleFaq(this)" type="button">
 <span>Why is blocking PHP files in wp-content/upgrade/ critical?</span>
 <span class="faq-icon">+</span>
 </button>
-<div class="faq-answer">
-            The upgrade folder exists solely for transient file unpacking. No PHP script in wp-content/upgrade/ should ever be executed directly by web visitors. Denying execution completely prevents race conditions and orphaned update files from functioning as active web shells.
-          </div>
+<div class="faq-body">
+The upgrade folder exists solely for transient file unpacking. No PHP script in wp-content/upgrade/ should ever be executed directly by web visitors. Denying execution completely prevents race conditions and orphaned update files from functioning as active web shells.
+</div>
 </div>
 <div class="faq-item">
-<button class="faq-question" onclick="toggleFaq(this)" type="button">
+<button class="faq-btn" onclick="toggleFaq(this)" type="button">
 <span>What is WP_TEMP_DIR and how does it eliminate this vulnerability?</span>
 <span class="faq-icon">+</span>
 </button>
-<div class="faq-answer">
-            The WP_TEMP_DIR directive in wp-config.php moves the temporary folder outside the public web root (such as /var/www/tmp/). Storing temporary files outside the DocumentRoot makes it physically impossible for web clients to reach or trigger them via HTTP requests.
-          </div>
+<div class="faq-body">
+The WP_TEMP_DIR directive in wp-config.php moves the temporary folder outside the public web root (such as /var/www/tmp/). Storing temporary files outside the DocumentRoot makes it physically impossible for web clients to reach or trigger them via HTTP requests.
+</div>
 </div>
 <div class="faq-item">
-<button class="faq-question" onclick="toggleFaq(this)" type="button">
+<button class="faq-btn" onclick="toggleFaq(this)" type="button">
 <span>Can Cloudflare WAF protect WordPress against this attack?</span>
 <span class="faq-icon">+</span>
 </button>
-<div class="faq-answer">
-            Yes. A custom Cloudflare WAF rule blocking any HTTP request whose URI path contains wp-content/upgrade/ intercepts and drops exploitation attempts at the global edge before they ever reach your origin server.
-          </div>
+<div class="faq-body">
+Yes. A custom Cloudflare WAF rule blocking any HTTP request whose URI path contains wp-content/upgrade/ intercepts and drops exploitation attempts at the global edge before they ever reach your origin server.
+</div>
 </div>
 <div class="faq-item">
-<button class="faq-question" onclick="toggleFaq(this)" type="button">
+<button class="faq-btn" onclick="toggleFaq(this)" type="button">
 <span>What is the difference between terminal auditing and browser testing?</span>
 <span class="faq-icon">+</span>
 </button>
-<div class="faq-answer">
-            Web browsers enforce strict sandbox constraints (Same-Origin Policy and CORS) that block deep inspection of raw HTTP headers and status codes on third-party domains. The Python CLI script runs directly at the network socket layer, providing deterministic and authoritative diagnostics.
-          </div>
+<div class="faq-body">
+Web browsers enforce strict sandbox constraints (Same-Origin Policy and CORS) that block deep inspection of raw HTTP headers and status codes on third-party domains. The Python CLI script runs directly at the network socket layer, providing deterministic and authoritative diagnostics.
+</div>
 </div>
 </div>
 </section>
